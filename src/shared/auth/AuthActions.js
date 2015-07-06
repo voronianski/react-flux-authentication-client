@@ -3,7 +3,6 @@ import { Actions } from 'flummox';
 class AuthActions extends Actions {
     constructor(api) {
         super();
-
         this.api = api;
     }
 

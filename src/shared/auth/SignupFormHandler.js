@@ -14,7 +14,7 @@ class SignupForm extends React.Component {
             lastName: '',
             email: '',
             password: '',
-            role: 'landlord'
+            role: 'artist'
         };
     }
 
@@ -26,7 +26,7 @@ class SignupForm extends React.Component {
             const { router } = this.context;
 
             await flux.getActions('auth').signup(this.state);
-            router.transitionTo('demo');
+            router.transitionTo('dashboard');
         } catch (err) {
             console.log(err);
         }
@@ -82,8 +82,8 @@ class SignupForm extends React.Component {
                 <div>
                     <label htmlFor="signupRole">Role: </label>
                     <select id="signupRole" valueLink={this.linkState('role')}>
-                        <option value="tenant">Tenant</option>
-                        <option value="landlord">Landlord</option>
+                        <option value="artist">Artist</option>
+                        <option value="listener">Listener</option>
                     </select>
                 </div>
 

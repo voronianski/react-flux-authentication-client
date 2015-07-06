@@ -36,6 +36,9 @@ module.exports = {
             test: /\.jsx?$/,
             exclude: /node_modules/,
             loaders: ['react-hot', 'babel?stage=0&optional=runtime&externalHelpers']
+        }, {
+            test: /\.css$/,
+            loader: 'style?singleton!css!cssnext'
         }]
     }
 };

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import DemoItem from './DemoItem';
+import Item from './Item';
 
-class DemoList extends React.Component {
+class List extends React.Component {
     render() {
         const { items } = this.props;
 
@@ -12,7 +12,7 @@ class DemoList extends React.Component {
 
         const itemNodes = items.map(item => {
             return (
-                <DemoItem key={item.id} title={item.title} price={item.price} />
+                <Item key={item.id} title={item.title} price={item.description} />
             );
         });
 
@@ -22,12 +22,12 @@ class DemoList extends React.Component {
     }
 }
 
-DemoList.defaultProps = {
+List.defaultProps = {
     items: []
 };
 
-DemoList.propTypes = {
+List.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default DemoList;
+export default List;

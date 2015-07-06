@@ -1,12 +1,12 @@
 import { Store } from 'flummox';
 
-class DemoStore extends Store {
+class ItemStore extends Store {
     constructor(flux) {
         super();
 
-        const demoActions = flux.getActions('demo');
+        const itemActions = flux.getActions('items');
 
-        this.register(demoActions.requestItems, this.handleRequestItems);
+        this.register(itemActions.requestItems, this.handleRequestItems);
 
         this.state = this.getInitialState();
     }
@@ -34,4 +34,4 @@ class DemoStore extends Store {
     }
 }
 
-export default DemoStore;
+export default ItemStore;

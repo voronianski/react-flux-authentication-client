@@ -1,19 +1,25 @@
 import { Flummox } from 'flummox';
 
-import DemoActions from './demoFeature/DemoActions';
-import DemoStore from './demoFeature/DemoStore';
+import WebAPI from './common/utils/WebAPI';
+
 import AuthActions from './auth/AuthActions';
 import AuthStore from './auth/AuthStore';
+import ItemActions from './dashboard/ItemActions';
+import ItemStore from './dashboard/ItemStore';
 
 class Flux extends Flummox {
-    constructor(api) {
+    constructor(accessToken) {
         super();
 
-        this.createActions('demo', DemoActions, api);
-        this.createStore('demo', DemoStore, this);
+        const api = new WebAPI(accessToken);
 
         this.createActions('auth', AuthActions, api);
         this.createStore('auth', AuthStore, this);
+
+        this.createActions('items', ItemActions, api);
+        this.createStore('items', ItemStore, this);
+
+        api.onUnauthorizedAccess = () => this.getActions('auth').logout();
     }
 }
 

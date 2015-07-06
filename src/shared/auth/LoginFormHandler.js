@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
             const { router } = this.context;
 
             await flux.getActions('auth').login(this.state);
-            router.transitionTo('demo');
+            router.transitionTo('dashboard');
         } catch (err) {
             console.log(err);
         }
@@ -31,33 +31,33 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={e => this.login(e)}>
-                <div>
+            <div className="auth-container">
+                <form onSubmit={e => this.login(e)} autoComplete="off">
                     <label htmlFor="loginEmail">Email: </label>
                     <input
                         id="loginEmail"
                         type="email"
+                        className="block mb1 field"
                         placeholder="john.doe@example.com"
                         valueLink={this.linkState('email')}
+                        autoComplete="off"
                         required
                     />
-                </div>
 
-                <div>
                     <label htmlFor="loginPassword">Password: </label>
                     <input
                         id="loginPassword"
                         type="password"
+                        className="block mb1 field"
                         placeholder="*************"
                         valueLink={this.linkState('password')}
+                        autoComplete="off"
                         required
                     />
-                </div>
 
-                <div>
-                    <button type="submit">Login</button>
-                </div>
-            </form>
+                    <button type="submit" className="btn btn-primary mt1">Login</button>
+                </form>
+            </div>
         );
     }
 }

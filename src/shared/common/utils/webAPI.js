@@ -42,27 +42,43 @@ class WebAPI {
     }
 
     logout() {
-        return cookies.expire('auth_token');
+        if (process.browser) {
+            cookies.expire('auth_token');
+        }
     }
 
-    getChats() {
+    _authRequest(url, method = 'GET', query = {}, params = {}) {
+        if (!url) {
+            throw new Error('URL is required for request');
+        }
+
         return new Promise((resolve, reject) => {
-            if (!this.accessToken) {
+            const { accessToken, onUnauthorizedAccess } = this;
+
+            if (!accessToken) {
+                onUnauthorizedAccess && onUnauthorizedAccess();
                 return resolve();
             }
 
-            request
-                .get(`${api.url}/user/chats`)
-                .set({'X-Access-Token': this.accessToken})
+            request[method.toLowerCase()](url)
+                .set({'X-Access-Token': accessToken})
+                .query(query)
+                .send(params)
                 .end((err, res) => {
                     if (err) {
-                        reject(res.body.errors);
-                    } else {
-                        console.log('***', res.body);
-                        resolve(res.body);
+                        if (err.status === 401 && onUnauthorizedAccess) {
+                            onUnauthorizedAccess();
+                            return resolve();
+                        }
+                        return reject(err, res);
                     }
+                    resolve(res.body, res);
                 });
         });
+    }
+
+    getUserItems() {
+        return this._authRequest(`${api.url}/user/items`);
     }
 }
 

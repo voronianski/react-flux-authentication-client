@@ -1,0 +1,22 @@
+@import 'basscss';
+
+.b2 {
+    border-width: 2px;
+}
+
+.semibold {
+    font-weight: 600;
+}
+
+.muted {
+    opacity: .3;
+}
+
+:root {
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --container-width: 820px;
+    --button-line-height: 1;
+    --sb-progress-height: 8px;
+    --button-big-padding-x: 1.25rem;
+    --button-big-padding-y: 1.25rem;
+}

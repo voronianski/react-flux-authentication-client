@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, DefaultRoute } from 'react-router';
 
 import AppHandler from './common/AppHandler';
-import DemoHandler from './demoFeature/DemoHandler';
+import DashboardHandler from './dashboard/DashboardHandler';
 
 import LoginFormHandler from './auth/LoginFormHandler';
 import SignupFormHandler from './auth/SignupFormHandler';
@@ -14,8 +14,8 @@ export default (
         <Route name="signup" path="/signup/?" handler={SignupFormHandler} />
 
         <Route name="secure" path="/?" handler={EnsureAuthHandler}>
-            <Route name="demo" path="demo/?" handler={DemoHandler} />
-            <DefaultRoute handler={DemoHandler} />
+            <Route name="dashboard" path="dashboard/?" handler={DashboardHandler} />
+            <DefaultRoute handler={DashboardHandler} />
         </Route>
 
         <DefaultRoute handler={EnsureAuthHandler} />
