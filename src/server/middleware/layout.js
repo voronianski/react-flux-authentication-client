@@ -8,7 +8,7 @@ import ReactRouter from 'react-router';
 import versionifyAssets from 'versionify-assets';
 
 import routes from '../../shared/routes';
-import performRouteHandlerStaticMethod from '../../shared/common/utils/performRouteHandlerStaticMethod';
+import performRouteHandlerStaticMethod from '../../shared/utils/performRouteHandlerStaticMethod';
 
 function handler (title, mainJS, mainCSS) {
     return (req, res, next) => {
@@ -44,6 +44,7 @@ export function development () {
 export function production () {
     return handler(
         'Universal React Flux Boilerplate',
-        versionifyAssets('/build/app.min.js')
+        versionifyAssets('/build/app.min.js'),
+        versionifyAssets('/build/app.min.css')
     );
 }

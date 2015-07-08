@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { Route, DefaultRoute } from 'react-router';
 
-import AppHandler from './common/AppHandler';
+import AppHandler from './AppHandler';
 import DashboardHandler from './dashboard/DashboardHandler';
 
 import LoginFormHandler from './auth/LoginFormHandler';

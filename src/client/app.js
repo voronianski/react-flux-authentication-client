@@ -12,7 +12,7 @@ window.React = React;
 
 import router from './router';
 import Flux from '../shared/flux';
-import performRouteHandlerStaticMethod from '../shared/common/utils/performRouteHandlerStaticMethod';
+import performRouteHandlerStaticMethod from '../shared/utils/performRouteHandlerStaticMethod';
 
 const accessToken = cookies('auth_token');
 const flux = new Flux(accessToken);

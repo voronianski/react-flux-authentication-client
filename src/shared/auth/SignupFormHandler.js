@@ -1,96 +1,108 @@
-import React from 'react/addons';
+import React from 'react';
 import reactMixin from 'react-mixin';
 import FluxComponent from 'flummox/component';
 
-const { LinkedStateMixin} = React.addons;
+import ValidateFormMixin from './ValidateFormMixin';
+import LinkedStateMixin from '../mixins/LinkedStateMixin';
 
 @reactMixin.decorate(LinkedStateMixin)
+@reactMixin.decorate(ValidateFormMixin)
 class SignupForm extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            role: 'artist'
+            formData: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                role: 'artist'
+            },
+            error: null
         };
     }
 
     async signup(e) {
         e.preventDefault();
 
-        try {
-            const { flux } = this.props;
-            const { router } = this.context;
+        const { flux } = this.props;
+        const { router } = this.context;
+        const { formData } = this.state;
 
-            await flux.getActions('auth').signup(this.state);
+        try {
+            this.validateForm(formData);
+            await flux.getActions('auth').signup(formData);
             router.transitionTo('dashboard');
         } catch (err) {
-            console.log(err);
+            const error = Array.isArray(err) ? err[0] : err;
+            this.setState({ error });
         }
     }
 
     render() {
+        const { error } = this.state;
+
         return (
-            <form onSubmit={e => this.signup(e)}>
-                <div>
+            <div className="auth-form-container signup mx-auto">
+                <form onSubmit={e => this.signup(e)} acceptCharset="utf-8" noValidate>
+                    {error ? (
+                        <div className="error-message red h6 mb1">{error.message}</div>
+                    ) : <span />}
+
                     <label htmlFor="signupFirstName">First name: </label>
                     <input
                         id="signupFirstName"
                         type="text"
+                        name="firstName"
+                        className={`block mt1 mb1 col-12 field ${this.getErrorClass('firstName')}`}
                         placeholder="John"
-                        valueLink={this.linkState('firstName')}
-                        required
+                        valueLink={this.linkState('formData.firstName')}
                     />
-                </div>
 
-                <div>
                     <label htmlFor="signupLastName">Last name: </label>
                     <input
                         id="signupLastName"
                         type="text"
+                        name="lastName"
+                        className={`block mt1 mb1 col-12 field ${this.getErrorClass('lastName')}`}
                         placeholder="Doe"
-                        valueLink={this.linkState('lastName')}
-                        required
+                        valueLink={this.linkState('formData.lastName')}
                     />
-                </div>
 
-                <div>
                     <label htmlFor="signupEmail">Email: </label>
                     <input
                         id="signupEmail"
                         type="email"
+                        name="emaily"
+                        className={`block mt1 mb1 col-12 field ${this.getErrorClass('email')}`}
                         placeholder="john.doe@example.com"
-                        valueLink={this.linkState('email')}
-                        required
+                        valueLink={this.linkState('formData.email')}
                     />
-                </div>
 
-                <div>
                     <label htmlFor="signupPassword">Password: </label>
                     <input
                         id="signupPassword"
                         type="password"
+                        name="password"
+                        className={`block mt1 mb1 col-12 field ${this.getErrorClass('password')}`}
                         placeholder="*************"
-                        valueLink={this.linkState('password')}
-                        required
+                        valueLink={this.linkState('formData.password')}
                     />
-                </div>
 
-                <div>
                     <label htmlFor="signupRole">Role: </label>
-                    <select id="signupRole" valueLink={this.linkState('role')}>
+                    <select
+                        id="signupRole"
+                        valueLink={this.linkState('role')}
+                        className="block mt1 mb1 col-12 field"
+                    >
                         <option value="artist">Artist</option>
                         <option value="listener">Listener</option>
                     </select>
-                </div>
 
-                <div>
-                    <button type="submit">Sign Up</button>
-                </div>
-            </form>
+                    <button type="submit" className="btn btn-primary mt2 right">Sign Up</button>
+                </form>
+            </div>
         );
     }
 }

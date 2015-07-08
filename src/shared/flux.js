@@ -1,6 +1,6 @@
 import { Flummox } from 'flummox';
 
-import WebAPI from './common/utils/WebAPI';
+import WebAPI from './utils/WebAPI';
 
 import AuthActions from './auth/AuthActions';
 import AuthStore from './auth/AuthStore';
