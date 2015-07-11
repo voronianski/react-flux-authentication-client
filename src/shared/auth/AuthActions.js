@@ -17,12 +17,17 @@ class AuthActions extends Actions {
     }
 
     tokenize(accessToken) {
-        return { accessToken };
+        return accessToken;
     }
 
     logout() {
         this.api.logout();
         return true;
+    }
+
+    async requestUser() {
+        const user = await this.api.getUserInfo();
+        return user;
     }
 }
 

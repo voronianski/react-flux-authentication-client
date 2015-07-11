@@ -3,12 +3,28 @@ import FluxComponent from 'flummox/component';
 
 import List from './components/List';
 
-class DashboardInner extends React.Component {
+class DashboardHandlerInner extends React.Component {
     render() {
+        const { user, items } = this.props;
+
+        let contentNode;
+        if (items.length) {
+            contentNode = (
+                <div>
+                    <h3>List of items:</h3>
+                    <List />
+                </div>
+            );
+        } else {
+            contentNode = (
+                <div>You have no items to display.</div>
+            );
+        }
+
         return (
-            <div>
-                <h2>List of items:</h2>
-                <List />
+            <div className="px2 py1">
+                <h2>Hi, {user.firstName}!</h2>
+                {contentNode}
             </div>
         );
     }
@@ -22,9 +38,10 @@ class DashboardHandler extends React.Component {
 
     render() {
         const { flux } = this.props;
+
         return (
             <FluxComponent flux={flux} connectToStores={['items']}>
-                <DashboardInner />
+                <DashboardHandlerInner {...this.props} />
             </FluxComponent>
         );
     }

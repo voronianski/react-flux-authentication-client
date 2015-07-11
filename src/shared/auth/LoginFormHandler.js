@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import reactMixin from 'react-mixin';
 import FluxComponent from 'flummox/component';
 
@@ -65,7 +66,13 @@ class LoginForm extends React.Component {
                         valueLink={this.linkState('formData.password')}
                     />
 
-                    <button type="submit" className="btn btn-primary mt2 right">Login</button>
+                    <div className="clearfix">
+                        <button type="submit" className="btn btn-primary mt2 right">Log in</button>
+                    </div>
+
+                    <div className="h5 center mt3">
+                        Don't have an account? <Link to="signup">Sign up!</Link>
+                    </div>
                 </form>
             </div>
         );

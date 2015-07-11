@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import reactMixin from 'react-mixin';
 import FluxComponent from 'flummox/component';
 
@@ -100,7 +101,13 @@ class SignupForm extends React.Component {
                         <option value="listener">Listener</option>
                     </select>
 
-                    <button type="submit" className="btn btn-primary mt2 right">Sign Up</button>
+                    <div className="clearfix">
+                        <button type="submit" className="btn btn-primary mt2 right">Sign Up</button>
+                    </div>
+
+                    <div className="h5 center mt3">
+                        Already have an account? <Link to="login">Log in!</Link>
+                    </div>
                 </form>
             </div>
         );

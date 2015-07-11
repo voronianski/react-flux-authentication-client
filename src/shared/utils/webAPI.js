@@ -80,6 +80,10 @@ class WebAPI {
     getUserItems() {
         return this._authRequest(`${api.url}/user/items`);
     }
+
+    getUserInfo() {
+        return this._authRequest(`${api.url}/user/me`);
+    }
 }
 
 export default WebAPI;

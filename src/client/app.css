@@ -1,4 +1,7 @@
 @import 'basscss';
+@import 'basscss-button-transparent';
+@import 'basscss-utility-headings';
+
 @import '../shared/auth';
 
 .b2 {

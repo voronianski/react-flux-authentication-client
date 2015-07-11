@@ -2,11 +2,12 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { Route, DefaultRoute } from 'react-router';
 
 import AppHandler from './AppHandler';
-import DashboardHandler from './dashboard/DashboardHandler';
 
 import LoginFormHandler from './auth/LoginFormHandler';
 import SignupFormHandler from './auth/SignupFormHandler';
 import EnsureAuthHandler from './auth/EnsureAuthHandler';
+
+import DashboardHandler from './dashboard/DashboardHandler';
 
 export default (
     <Route name="app" path="/?" handler={AppHandler}>

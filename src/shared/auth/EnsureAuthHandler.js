@@ -1,8 +1,42 @@
 import React from 'react';
-import { RouteHandler } from 'react-router';
+import { RouteHandler, Link } from 'react-router';
 import FluxComponent from 'flummox/component';
 
+class EnsureAuthInner extends React.Component {
+    render() {
+        const { isLoggedIn, onLogout } = this.props;
+
+        if (!isLoggedIn) {
+            return null;
+        }
+
+        return (
+            <div>
+                <header>
+                    <nav className="clearfix white bg-blue">
+                        <div className="sm-col">
+                            <Link to="secure" className="btn button-transparent py2">Home</Link>
+                        </div>
+                        <div className="sm-col-right">
+                            <button className="btn button-transparent py2" onClick={() => onLogout()}>Logout</button>
+                        </div>
+                    </nav>
+                </header>
+                <RouteHandler {...this.props} />
+            </div>
+        );
+    }
+}
+
 class EnsureAuthHandler extends React.Component {
+    static async routerWillRun({ flux }) {
+        const user = flux.getStore('auth').getUser();
+        if (!user) {
+            const authActions = flux.getActions('auth');
+            return await authActions.requestUser();
+        }
+    }
+
     constructor(props, context) {
         super();
 
@@ -37,13 +71,11 @@ class EnsureAuthHandler extends React.Component {
         return (
             <FluxComponent flux={this.flux} connectToStores={{
                 auth: store => ({
+                    user: store.getUser(),
                     isLoggedIn: store.isLoggedIn()
                 })
             }}>
-                <header>
-                    <button type="button" onClick={() => this.logout()}>Logout</button>
-                </header>
-                <RouteHandler />
+                <EnsureAuthInner onLogout={::this.logout} />
             </FluxComponent>
         );
     }
